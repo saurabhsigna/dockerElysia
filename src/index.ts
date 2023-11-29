@@ -8,7 +8,8 @@ app.get("/", async (c)=>{
  
   const count = await redis.incr("count")
   const allHeader = c.request.headers;
-  return allHeader
+  // return allHeader
+return "hello moto"
 })
 
 
