@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: './app'
+    ports:
+      -"3000:3000"
+  
+  nginx:
+    image: 'nginx-alpine'
+    ports:
+      - "8080:80"
