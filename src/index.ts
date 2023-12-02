@@ -19,5 +19,5 @@ app.listen({
 })
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 Elysiajs is running at ${app.server?.hostname}:${app.server?.port}`
 );
