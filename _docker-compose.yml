@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      ports:
+      
+    
+
+      env_file:
+        - .env.local
+  
+
+ 
