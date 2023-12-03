@@ -12,11 +12,11 @@ COPY bun.lockb .
 RUN bun install
 
 
-# COPY . /app/.
-COPY . ./backend
+COPY . .
 
 ENV PORT 3000
 ENV NODE_ENV production
-CMD ["bun", "start"]
+CMD [ "bun","start" ]
+
 
 EXPOSE 3000
