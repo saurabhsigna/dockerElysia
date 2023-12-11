@@ -1,16 +1,4 @@
-import { Elysia } from "elysia";
-import Redis from "ioredis"
-const app = new Elysia()
-
-const redis = new Redis(process.env.UPSTASH_REDIS_CONNECTION_STRING as string)
-
-app.get("/", async (c)=>{
- 
-  const count = await redis.incr("count")
-  const allHeader = c.request.headers;
-  // return allHeader
-return "hello moto"
-})
+import { app } from "./routers/index.routes";
 
 
 app.listen({
@@ -19,5 +7,5 @@ app.listen({
 })
 
 console.log(
-  `🦊 Elysiajs is running at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 ja nig  at ${app.server?.hostname}:${app.server?.port}`
 );

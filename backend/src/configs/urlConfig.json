@@ -1,0 +1,7 @@
+{
+    "getWeeklyTopSongs":" https://www.jiosaavn.com/api.php?__call=webapi.get&token=8MT-LQlP35c_&type=playlist&p=1&n=50&includeMetaTags=0&ctx=wap6dot0&api_version=4&_format=json&_marker=0",
+    "spotifyTop50India":"https://api.spotify.com/v1/playlists/37i9dQZEVXbLZ52XmnySJg",
+    "spotifyAccessToken":"https://accounts.spotify.com/api/token",
+    "spotifyPlaylistUrl":"https://api.spotify.com/v1/playlists",
+     "googleTokenUrl":"https://oauth2.googleapis.com/token"
+}

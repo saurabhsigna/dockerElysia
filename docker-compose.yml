@@ -1,16 +1,25 @@
-services:
+  services:
 
-  backend:
-    build:
-      context: ./backend
-    # ports:
-    #   - "3000:3000"
-    env_file:
-      - ./backend/.env.local
+    backend:
+      build: ./backend
+      # ports:
+      #   - "3000:3000"
+      env_file:
+        - ./backend/.env.local
+      volumes:
+       
+      
+        - /usr/src/app/node_modules
+        
+
+      
+     
+    nginx_reverse_proxy:
+      build: 
+        context: ./nginx
+      ports:
+        - "5000:80"  
   
-  nginx_reverse_proxy:
-    build: 
-      context: ./nginx
-    ports:
-      - "5000:80"  
- 
+  volumes:
+    nodeModules:
+

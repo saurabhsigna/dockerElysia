@@ -2,16 +2,25 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
+    "db:generate": "drizzle-kit generate:mysql",
+    "db:deploy": "bun run src/db/migrator.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
     "start": "bun src/index.ts"
   },
   "dependencies": {
+    "@planetscale/database": "^1.11.0",
+    "drizzle-orm": "^0.29.1",
     "elysia": "latest",
-    "ioredis": "^5.3.2"
+    "http-errors": "^2.0.0",
+    "ioredis": "^5.3.2",
+    "mysql2": "^3.6.5",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "drizzle-kit": "^0.20.6",
+    "ts-node": "^10.9.2"
   },
   "module": "src/index.js"
 }
