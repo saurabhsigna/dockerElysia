@@ -4,9 +4,15 @@ import mysql2 from "mysql2/promise";
 import path from "path";
 
 const doMigrate = async () => {
+  const {DATABASE_HOST,DATABASE_PASSWORD,DATABASE_USERNAME}= process.env
   try {
     const dbConnection = await mysql2.createConnection({
-      uri: process.env.DATABASE_URL,
+    host:DATABASE_HOST,
+    user:DATABASE_USERNAME,
+    password:DATABASE_PASSWORD,
+      ssl:{
+        rejectUnauthorized:true
+      }
     });
     const dbMigrator = drizzle(dbConnection);
 
@@ -21,3 +27,19 @@ const doMigrate = async () => {
   }
 };
 doMigrate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

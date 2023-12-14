@@ -7,5 +7,5 @@ app.listen({
 })
 
 console.log(
-  `🦊 ja nig  at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 Elysia running at ${app.server?.hostname}:${app.server?.port}`
 );

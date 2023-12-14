@@ -1,6 +1,5 @@
-import { relations, sql } from "drizzle-orm";
-import { boolean, datetime, json, mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
-import { downloadSongsSchema as downloadedSongs } from "./downloadedSong.schema";
+import {  sql } from "drizzle-orm";
+import { boolean, datetime, int, json, mysqlTable, serial, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 export const userSchema = mysqlTable("users", {
   id: serial("id").primaryKey().notNull(),
@@ -20,31 +19,3 @@ export const userSchema = mysqlTable("users", {
 
 
 
-
-
-
-export const usersRelation  = relations(userSchema,({many})=>({
-  UserDownloadedSongs:many(UserDownloadedSongs)
-}))
-
-
-export const downloadedSongRelation  = relations(downloadedSongs,({many})=>({
-  UserDownloadedSongs:many(UserDownloadedSongs)
-}))
-
-
-export const UserDownloadedSongs = mysqlTable('userDownloadedSongs', {
-  userId: serial('user_id').references(() => userSchema.id),
-  songId: serial('song_id').references(() => downloadedSongs.id),
-})
-
-export const userDownloadedSongsRelation = relations(UserDownloadedSongs,({one})=>({
-  downloadedSong: one(downloadedSongs, {
-    fields: [UserDownloadedSongs.songId],
-    references: [downloadedSongs.id],
-  }),
-  user: one(userSchema, {
-    fields: [UserDownloadedSongs.userId],
-    references: [userSchema.id],
-  }),
-}))

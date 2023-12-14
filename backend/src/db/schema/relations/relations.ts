@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
-import { downloadedSongs, users } from "..";
-import { PrimaryKey, mysqlTable, primaryKey, serial } from "drizzle-orm/mysql-core";
+import { downloadSongsSchema as downloadedSongs } from "../downloadedSong.schema";
+import { userSchema as users } from "../user.schema";
+import {  bigint, mysqlTable } from "drizzle-orm/mysql-core";
 
 
 export const usersRelation  = relations(users,({many})=>({
@@ -14,8 +15,8 @@ export const downloadedSongRelation  = relations(downloadedSongs,({many})=>({
 
 
 export const UserDownloadedSongs = mysqlTable('userDownloadedSongs', {
-  userId: serial('user_id').references(() => users.id),
-  songId: serial('song_id').references(() => downloadedSongs.id),
+  userId: bigint('user_id',{mode:"bigint"}),
+  songId: bigint('song_id',{mode:"bigint"}),
 })
 
 export const userDownloadedSongsRelation = relations(UserDownloadedSongs,({one})=>({

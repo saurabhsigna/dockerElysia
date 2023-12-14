@@ -4,6 +4,8 @@
   "scripts": {
     "db:generate": "drizzle-kit generate:mysql",
     "db:deploy": "bun run src/db/migrator.ts",
+    "drizzle:studio": "drizzle-kit studio --port 6969 --verbose",
+    "db:push": "drizzle-kit push:mysql --config=drizzle.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
     "start": "bun src/index.ts"
@@ -18,6 +20,7 @@
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "bun-types": "latest",
     "drizzle-kit": "^0.20.6",
     "ts-node": "^10.9.2"
