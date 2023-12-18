@@ -4,7 +4,7 @@ import urlConfig from "../configs/urlConfig.json";
 import { getSpotifyAccessToken, getTop50SongsData } from "../fxn/spotify";
 import { fetchSoundById } from "../fxn/ytdl/fetchSoundById";
 import { db } from "../db/db";
-import { users } from "../db/schema";
+import { userSchema } from "../db/schema";
 interface ProfileContext extends Context {
   authResponse?: string;
 }
@@ -59,7 +59,7 @@ export const getSpotifyPlaylistData = async (ctx: Context) => {
     //  let statusCode = error?.statusCode;
     // if(statusCode) ctx.set.status = statusCode
     // if(message) return error?.message
-    console.log("life goes on")
+   
     return "error in getting top 50 songs"
   }
 };
@@ -68,8 +68,8 @@ export const getSpotifyPlaylistData = async (ctx: Context) => {
 
 export const fetchSoundByIdController = async (ctx:Context)=>{
   const {body} = ctx;
-  const {id}:any = body
-  const response = await fetchSoundById(id)
+  const {id,cookie}:any = body
+  const response = await fetchSoundById(id,cookie)
   return response
 }
 

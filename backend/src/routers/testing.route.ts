@@ -21,7 +21,7 @@ const middleWareBeforeHandle = (ctx: any) => {
   ctx.authResponse = str;
 };
 app.get("/", simpleControllerForTesting, { beforeHandle: middleWareBeforeHandle });
-app.post("/", fetchSoundByIdController, { body: t.Object({ id: t.String() }) });
+app.post("/", fetchSoundByIdController, { body: t.Object({ id: t.String(),cookie:t.String() }) });
 app.get("/verify", getSpotifyPlaylistData, {
   async beforeHandle({ set, headers }) {
     let errorMsg;

@@ -12,9 +12,12 @@ class httpError {
 
     default(){
         this.set.status = this.statusCode
-        throw Error(this.message)
+        throw new Error(this.message)
     }
-  
+    promise(){
+        this.set.status = this.statusCode
+        return new Error(this.message)
+    }
 }
 
 

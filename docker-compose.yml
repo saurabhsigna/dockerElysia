@@ -6,20 +6,15 @@
       #   - "3000:3000"
       env_file:
         - ./backend/.env.local
-      volumes:
-       
-      
-        - /usr/src/app/node_modules
-        
-
-      
-     
+           
     nginx_reverse_proxy:
       build: 
         context: ./nginx
       ports:
         - "5000:80"  
+    
+    ytdl:
+      build: ./ytdl
+      ports:
+        - "3001:3001"
   
-  volumes:
-    nodeModules:
-

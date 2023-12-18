@@ -18,7 +18,7 @@ export const verifyAccessToken =async ({headers,set}:any)=>{
         break;
      
       case "Bearer":
-            console.log("ye bearer wala hai kya ")
+            console.log("bearer auth")
         break;
       default:
         set.status = 403

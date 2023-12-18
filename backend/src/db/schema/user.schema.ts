@@ -19,3 +19,7 @@ export const userSchema = mysqlTable("users", {
 
 
 
+
+
+export type UserType = typeof userSchema.$inferInsert;
+export type NewUserType = typeof userSchema.$inferInsert;
