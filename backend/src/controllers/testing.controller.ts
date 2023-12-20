@@ -76,5 +76,12 @@ export const fetchSoundByIdController = async (ctx:Context)=>{
 
 export const simpleControllerForTesting = async(ctx:Context)=>
 {
-  return "this is for testing"
+  try {
+    const IpAddress =
+      ctx.headers["x-forwarded-for"] || ctx.headers["x-real-ip"];
+    if (!IpAddress) throw new Error("Ip address not found");
+    return IpAddress;
+  } catch (error: any) {
+    return error?.message;
+  }
 }
