@@ -2,8 +2,7 @@
 
     backend:
       build: ./backend
-      # ports:
-      #   - "3000:3000"
+
       env_file:
         - ./backend/.env.local
            
@@ -11,6 +10,6 @@
       build: 
         context: ./nginx
       ports:
-        - "0.0.0.0:80:80"  
+        - "0.0.0.0:3000:80"  
     
   

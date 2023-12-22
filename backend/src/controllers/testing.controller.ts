@@ -47,41 +47,36 @@ export const getSpotifyPlaylistData = async (ctx: Context) => {
   try {
     let accessToken = await redis.get("spotify_access_token");
 
-  if (!accessToken) {
-    accessToken = await getSpotifyAccessToken();
-  }
-  const top50SongsData = await getTop50SongsData(accessToken as string);
-    
-  return top50SongsData;
-    
-  } catch (error:any) {
+    if (!accessToken) {
+      accessToken = await getSpotifyAccessToken();
+    }
+    const top50SongsData = await getTop50SongsData(accessToken as string);
+
+    return top50SongsData;
+  } catch (error: any) {
     //  let message = error?.message;
     //  let statusCode = error?.statusCode;
     // if(statusCode) ctx.set.status = statusCode
     // if(message) return error?.message
-   
-    return "error in getting top 50 songs"
+
+    return "error in getting top 50 songs";
   }
 };
 
+export const fetchSoundByIdController = async (ctx: Context) => {
+  const { body } = ctx;
+  const { id, cookie }: any = body;
+  const response = await fetchSoundById(id, cookie);
+  return response;
+};
 
-
-export const fetchSoundByIdController = async (ctx:Context)=>{
-  const {body} = ctx;
-  const {id,cookie}:any = body
-  const response = await fetchSoundById(id,cookie)
-  return response
-}
-
-
-export const simpleControllerForTesting = async(ctx:Context)=>
-{
+export const simpleControllerForTesting = async (ctx: Context) => {
   try {
-    const IpAddress =
-      ctx.headers["x-forwarded-for"] || ctx.headers["x-real-ip"];
+    const IpAddress = ctx.headers["x-forwarded-for"];
+    console.log(IpAddress);
     if (!IpAddress) throw new Error("Ip address not found");
     return IpAddress;
   } catch (error: any) {
     return error?.message;
   }
-}
+};
