@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "../../db/db";
-import {  userSchema } from "../../db/schema";
+import { userSchema } from "../../db/schema";
 import { httpError } from "../../helpers/HTTPError";
 
 interface Props {
@@ -34,18 +34,17 @@ export class User {
     }
   }
 
-  async updateToVerified(email: string,set:any) {
+  async updateToVerified(email: string, set: any) {
     return new Promise(async (resolve: any, reject: any) => {
       await db
         .update(userSchema)
         .set({ isVerified: true })
         .where(eq(userSchema.email, email))
         .then((res) => {
-      // reject(new httpError(500,"updated with reject but will remove after testing",set).promise())
-          resolve( "updated")
+          // reject(new httpError(500,"updated with reject but will remove after testing",set).promise())
+          resolve("updated");
         })
         .catch((err) => {
-        
           reject("some error");
         });
     });

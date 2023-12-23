@@ -11,6 +11,11 @@ import {
   // checkPasswordController,
 } from "../controllers/(basicAuth)/login.controller";
 import { rateLimitMiddleware } from "../middlewares/ratelimit";
+import { forgotPasswordController } from "../controllers/(basicAuth)/forgot-password";
+import {
+  resetPasswordController,
+  resetPasswordControllerPost,
+} from "../controllers/(basicAuth)/reset-password";
 const app = new Elysia();
 
 app.post("/auth/basic", signUpController, {
@@ -55,5 +60,23 @@ app.post("/auth/basic/login", LoginController, {
 
 // app.post("/auth/basic/password", checkPasswordController);
 app.get("/auth/basic/header", signUpController_Test_UA);
+app.post("/auth/basic/forgot-password", forgotPasswordController, {
+  body: t.Object({
+    email: t.String(),
+  }),
+});
 
+app.get(
+  "/auth/basic/reset-password/:forgotPasswordKey",
+  resetPasswordController,
+);
+app.post(
+  "/auth/basic/reset-password/:forgotPasswordKey",
+  resetPasswordControllerPost,
+  {
+    body: t.Object({
+      password: t.String(),
+    }),
+  },
+);
 export { app as basicAuthRoute };
