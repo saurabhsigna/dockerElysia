@@ -41,7 +41,7 @@ export const signUpControllerTesting = async (ctx: Context) => {
   }
 };
 
-export const signupController_TestHash = async (ctx: Context) => {
+export const signupController = async (ctx: Context) => {
   try {
     const { nickName, email, password }: any = ctx.body;
     const newUser = await createNewUser(nickName, email, password, ctx);

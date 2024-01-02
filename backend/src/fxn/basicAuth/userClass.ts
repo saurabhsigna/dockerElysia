@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../../db/db";
 import { userSchema } from "../../db/schema";
 import { httpError } from "../../helpers/HTTPError";
+import { hashPassword } from "./password";
 
 interface Props {
   id?: boolean | undefined;
@@ -60,5 +61,21 @@ export class User {
     } else {
       return user;
     }
+  }
+
+  async updatePassword(email: string, password: string) {
+    return new Promise(async (resolve: any, reject: any) => {
+      const hashed_password = await hashPassword(password);
+      await db
+        .update(userSchema)
+        .set({ hashed_password })
+        .where(eq(userSchema.email, email))
+        .then((res) => {
+          resolve("updated");
+        })
+        .catch((err) => {
+          reject("some error in updating password");
+        });
+    });
   }
 }

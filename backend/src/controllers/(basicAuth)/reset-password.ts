@@ -19,6 +19,9 @@ try {
     const userManager = new User();
     const user = await userManager.findUserByEmail(email as string,{id:true})
     if(!user) throw new httpError(404,'user not found',ctx.set).default()
+
+    await userManager.updatePassword(email as string,password)
+    await redis.del(forgotPasswordKey)
     return user
 } catch (error:any) {
     return error?.message

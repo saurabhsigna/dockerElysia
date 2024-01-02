@@ -4,7 +4,7 @@ import {
   signUpControllerTesting,
   signUpController_TestEmail,
   signUpController_Test_UA,
-  signupController_TestHash,
+  signupController,
 } from "../controllers/(basicAuth)/signup.controller";
 import {
   LoginController,
@@ -26,7 +26,7 @@ app.post("/auth/basic", signUpController, {
   }),
 });
 
-app.post("/auth/basic/testing", signupController_TestHash, {
+app.post("/auth/basic/signup", signupController, {
   body: t.Object({
     nickName: t.String(),
     email: t.String(),

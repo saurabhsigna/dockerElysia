@@ -37,7 +37,7 @@ export const verifyOTPController = async (ctx: Context) => {
      const refreshToken = await signRefreshToken({userId:userData.id,expiresInsec:20*24*3600},ctx.set)
    
 console.log(result)
-
+await redis.expire(verification_key,0)
 
     return userData;
   } catch (error: any) {
