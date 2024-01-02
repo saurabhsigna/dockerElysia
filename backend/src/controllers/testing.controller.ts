@@ -5,6 +5,8 @@ import { getSpotifyAccessToken, getTop50SongsData } from "../fxn/spotify";
 import { fetchSoundById } from "../fxn/ytdl/fetchSoundById";
 import { db } from "../db/db";
 import { userSchema } from "../db/schema";
+import { getLocationFromIP } from "../fxn/basicAuth/fetchLocationFromIP";
+import { checkUA } from "../fxn/basicAuth/checkUA";
 interface ProfileContext extends Context {
   authResponse?: string;
 }
@@ -74,9 +76,18 @@ export const simpleControllerForTesting = async (ctx: Context) => {
   try {
     const IpAddress = ctx.headers["x-forwarded-for"];
     console.log(IpAddress);
+    const ipLocation = await getLocationFromIP(IpAddress as string);
+    const deviceInfo = await checkUA(ctx);
+    console.log(ipLocation);
     if (!IpAddress) throw new Error("Ip address not found");
-    return IpAddress;
+    return deviceInfo;
   } catch (error: any) {
     return error?.message;
   }
+};
+
+export const getRedisKeyController = async (ctx: Context) => {
+  const { key }: any = await ctx.body;
+  const result = await redis.hgetall(key);
+  return result;
 };

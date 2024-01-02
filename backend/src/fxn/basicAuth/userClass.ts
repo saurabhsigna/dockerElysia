@@ -13,6 +13,9 @@ interface Props {
   hashed_password?: boolean | undefined;
   createdAt?: boolean | undefined;
   profilePic?: boolean | undefined;
+  session_key?: boolean | undefined;
+  blocked_until?: boolean | undefined;
+  isBlocked?: boolean | undefined;
   updatedAt?: boolean | undefined;
 }
 

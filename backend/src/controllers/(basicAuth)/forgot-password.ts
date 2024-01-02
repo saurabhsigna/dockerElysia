@@ -18,6 +18,7 @@ const userManager = new User()
 const userEmail:{id?:string}|null = await userManager.findUserByEmail(email)
 if(!userEmail?.id) throw new httpError(404,'email not found',ctx.set).default()
   await redis.hset(forgotPasswordKey, valuePair)
+await redis.expire(forgotPasswordKey,  60 * 15)
 const forgotPasswordUrl = `${process.env.URL}/auth/basic/reset-password/${forgotPasswordKey}`
 await forgotPasswordLink(forgotPasswordUrl,email,ctx.set)
 return 'Password reset link sent to your email'

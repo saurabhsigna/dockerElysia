@@ -5,12 +5,13 @@ import { User } from "../../fxn/basicAuth/userClass";
 import { signAccessToken } from "../../helpers/jwt/signAccessToken";
 import { signRefreshToken } from "../../helpers/jwt/signRefreshToken";
 import { checkUA } from "../../fxn/basicAuth/checkUA";
+import { createSession } from "../../helpers/session/createSession";
 
 export const verifyOTPController = async (ctx: Context) => {
   const { verification_key, otp }: any = ctx.body;
   const userAgent = ctx.headers["user-agent"];
   try {
-    const result =await checkUA(ctx)
+   
     const key = decodeURIComponent(verification_key);
     const verificationData = await redis.hgetall(key);
     if (Object.keys(verificationData).length == 0) {
@@ -26,18 +27,20 @@ export const verifyOTPController = async (ctx: Context) => {
     const userManager = new User();
     const userData: any = await userManager.findUserByEmail(
       verificationData.email,
-      { email: true }
+      { email: true ,
+      id:true,
+      session_key:true,
+    isBlocked:true,
+    blocked_until:true
+  }
     );
     console.log(userData);
     if (!userData?.email) throw new httpError(404,"user not found",ctx.set).default()
      
 
      await userManager.updateToVerified(verificationData.email,ctx.set)
-     const accessToken = await signAccessToken({userId:userData.id,email:userData.email,expiresInsec:2*3600},ctx.set)
-     const refreshToken = await signRefreshToken({userId:userData.id,expiresInsec:20*24*3600},ctx.set)
-   
-console.log(result)
-await redis.expire(verification_key,0)
+     await redis.expire(verification_key,0)
+    await createSession(userData,ctx)
 
     return userData;
   } catch (error: any) {

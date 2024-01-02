@@ -10,6 +10,10 @@ export const checkUA = async (ctx: Context) => {
 
     const engineName = parser.getResult().engine.name;
     const result = parser.getResult();
+    const jsonData = {
+      os: `${result.os.name}, with version ~ ${result.os.version}`,
+      browser: `${result.browser.name}, with version ~ ${result.browser.version}`,
+    };
     // if (!engineName)
     //   throw new httpError(
     //     400,
@@ -20,7 +24,7 @@ export const checkUA = async (ctx: Context) => {
     if (!user_agent)
       throw new httpError(404, "not found user-agent", ctx.set).default();
 
-    return result;
+    return jsonData;
   } catch (error: any) {
     let errorMsg = error?.message ?? "default error in checking UA";
 

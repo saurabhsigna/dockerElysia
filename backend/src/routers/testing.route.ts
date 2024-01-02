@@ -4,6 +4,7 @@ import {
   getSpotifyPlaylistData,
   fetchSoundByIdController,
   simpleControllerForTesting,
+  getRedisKeyController,
 } from "../controllers/testing.controller";
 import Elysia, { t } from "elysia";
 import { googleAuthVerifyAccessToken_Middleware } from "../middlewares/oauth.google.middleware";
@@ -46,6 +47,8 @@ app.get("/verify", getSpotifyPlaylistData, {
     return errorMsg ?? errorMsg;
   },
 });
+
+app.post("/redis", getRedisKeyController);
 
 app.get("/testing", donwloadSongsController, {
   beforeHandle(context: any) {
