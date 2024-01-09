@@ -9,7 +9,7 @@ export async function createNewUser(
   nickName: string,
   email: string,
   password: string,
-  ctx: Context
+  ctx: Context,
 ) {
   try {
     const userManager = new User();
@@ -18,7 +18,7 @@ export async function createNewUser(
       throw new httpError(
         400,
         "user already Found , You should Log In",
-        ctx.set
+        ctx.set,
       ).default();
 
     const bcryptHash = await Bun.password.hash(password, {
@@ -33,7 +33,7 @@ export async function createNewUser(
       isVerified: false,
     });
 
-    const response = await generateOtpForNewUser(nickName,email, ctx);
+    const response = await generateOtpForNewUser(nickName, email, ctx);
     return response;
   } catch (error: any) {
     let errorMsg = error?.message ?? "default error";

@@ -22,6 +22,7 @@ try {
 
     await userManager.updatePassword(email as string,password)
     await redis.del(forgotPasswordKey)
+    
     return user
 } catch (error:any) {
     return error?.message

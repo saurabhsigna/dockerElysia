@@ -3,6 +3,7 @@ import { db } from "../../db/db";
 import { userSchema } from "../../db/schema";
 import { httpError } from "../../helpers/HTTPError";
 import { hashPassword } from "./password";
+import { Context } from "elysia";
 
 interface Props {
   id?: boolean | undefined;
@@ -78,6 +79,57 @@ export class User {
         })
         .catch((err) => {
           reject("some error in updating password");
+        });
+    });
+  }
+  async saveDiscordUser(userData: any, ctx: Context) {
+    return new Promise(async (resolve: any, reject: any) => {
+      const isUserPresent = await db.query.userSchema.findFirst({
+        where: eq(userSchema.email, userData?.email),
+        columns: {
+          provider_type: true,
+        },
+      });
+      console.log(isUserPresent);
+      if (isUserPresent) {
+        // reject("user already present");
+        throw new httpError(
+          400,
+          "user already present with discord",
+          ctx.set,
+        ).default();
+      }
+      await db
+        .insert(userSchema)
+        .values({
+          isVerified: true,
+          email: userData?.email,
+          name: userData?.global_name,
+          profilePic: userData?.profilePic,
+          provider_type: "discord",
+        })
+        .then((res) => {
+          console.log("saved user in discord");
+          resolve("saved");
+        })
+        .catch((err: any) => {
+          console.log(err);
+          reject("some error in saving user from discord auth");
+        });
+    });
+  }
+
+  async updateSessionKey(id: any, session_key: any) {
+    return new Promise(async (resolve: any, reject: any) => {
+      await db
+        .update(userSchema)
+        .set({ session_key })
+        .where(eq(userSchema.id, id))
+        .then((res) => {
+          resolve("updated");
+        })
+        .catch((err) => {
+          reject("some error in updating session key");
         });
     });
   }

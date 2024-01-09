@@ -11,7 +11,7 @@ interface userDataProps {
   session_key?: string;
 }
 export async function createSession(userData: any, ctx: Context) {
-  const sessionInRedis = await redis.hget(userData.session_key, "userId");
+  const sessionInRedis = await redis.hget(userData.session_key, "devices");
   if (!sessionInRedis) {
     console.log(await createSessionFromScratch(userData, ctx));
   }
@@ -32,12 +32,12 @@ async function createSessionFromScratch(userData: any, ctx: Context) {
     { userId: userData.id, expiresInsec: 20 * 24 * 3600 },
     ctx.set,
   );
-  const device2 = "akl";
+
   const fullInfo = { ...locationInfo, ...browserInfo, refreshToken };
-  const devices = [deviceName, device2];
+  const devices = [deviceName];
   await redis.hmset(sessionKey, {
     devices,
-    fullInfo: JSON.stringify(fullInfo),
+    deviceName: JSON.stringify(fullInfo),
     userId: userData.id,
   });
   await redis.expire(sessionKey, 30 * 24 * 3600);
@@ -52,4 +52,11 @@ async function createSessionFromScratch(userData: any, ctx: Context) {
   return devices;
 }
 
-function createSessionFromCheckPoint() {}
+async function createSessionFromCheckPoint() {}
+async function createSessionFromDiscord(userData: any, ctx: Context) {
+  const browserInfo = await checkUA(ctx);
+  const IpAddress = ctx.headers["x-forwarded-for"];
+  const sessionKey = `session:${randomUUID()}`;
+  const locationInfo = await getLocationFromIP(IpAddress as string);
+  const deviceName = randomUUID();
+}

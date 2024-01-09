@@ -16,6 +16,7 @@ import {
   resetPasswordController,
   resetPasswordControllerPost,
 } from "../controllers/(basicAuth)/reset-password";
+import { refreshTokenControllerbasicAuth } from "../controllers/(basicAuth)/refreshToken.controller";
 const app = new Elysia();
 
 app.post("/auth/basic", signUpController, {
@@ -79,4 +80,5 @@ app.post(
     }),
   },
 );
+app.post("/auth/basic/get-access-token", refreshTokenControllerbasicAuth);
 export { app as basicAuthRoute };

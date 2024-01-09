@@ -88,6 +88,6 @@ export const simpleControllerForTesting = async (ctx: Context) => {
 
 export const getRedisKeyController = async (ctx: Context) => {
   const { key }: any = await ctx.body;
-  const result = await redis.hgetall(key);
+  const result = await redis.hget(key, "devices");
   return result;
 };

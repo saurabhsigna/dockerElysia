@@ -20,7 +20,7 @@ export const userSchema = mysqlTable("users", {
     .$type<{ time_at: string; location: string }[]>()
     .default([]),
   isVerified: boolean("isVerified").notNull().default(false),
-  hashed_password: varchar("hashed_password", { length: 256 }).notNull(),
+  hashed_password: varchar("hashed_password", { length: 256 }),
   createdAt: timestamp("createdAt", { mode: "string" }).defaultNow(),
   profilePic: text("profile_pic"),
   updatedAt: datetime("updated_at")
